@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# ── Green & white theme ────────────────────────────────────────────────────────
+# ── Blue & green theme ────────────────────────────────────────────────────────
 st.markdown("""
 <style>
     /* Main background */
@@ -13,26 +13,26 @@ st.markdown("""
     [data-testid="collapsedControl"] { display: none; }
 
     /* Title */
-    h1 { color: #166534 !important; }
-    h2, h3 { color: #15803D !important; }
+    h1 { color: #1E40AF !important; }
+    h2, h3 { color: #16A34A !important; }
 
     /* KPI metric cards */
     [data-testid="stMetric"] {
-        background-color: #DCFCE7;
+        background-color: #DBEAFE;
         border-left: 4px solid #16A34A;
         border-radius: 8px;
         padding: 12px;
     }
-    [data-testid="stMetricLabel"] { color: #166534 !important; }
-    [data-testid="stMetricValue"] { color: #14532D !important; }
+    [data-testid="stMetricLabel"] { color: #1E40AF !important; }
+    [data-testid="stMetricValue"] { color: #1E3A8A !important; }
 
     /* Divider */
-    hr { border-color: #86EFAC; }
+    hr { border-color: #93C5FD; }
 </style>
 """, unsafe_allow_html=True)
 
-GREEN = ["#14532D", "#166534", "#15803D", "#16A34A", "#22C55E",
-         "#4ADE80", "#86EFAC", "#BBF7D0"]
+BLUE_GREEN = ["#1D4ED8", "#16A34A", "#2563EB", "#22C55E", "#3B82F6",
+              "#4ADE80", "#60A5FA", "#86EFAC"]
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Sales Dashboard", page_icon="📊", layout="wide")
@@ -112,7 +112,7 @@ num_countries  = filtered["Country"].nunique()
 num_products   = filtered["Product"].nunique()
 
 k1, k2, k3, k4 = st.columns(4)
-k1.metric("💰 Total Sales",    f"${total_sales:,.2f}")
+k1.metric("💰 Total Sales",    f"RWF {total_sales:,.0f}")
 k2.metric("📦 Total Quantity", f"{total_quantity:,.0f}")
 k3.metric("🌍 Countries",      num_countries)
 k4.metric("🛒 Products",       num_products)
@@ -122,7 +122,7 @@ st.markdown("---")
 LAYOUT = dict(
     plot_bgcolor="#ffffff",
     paper_bgcolor="#ffffff",
-    font_color="#166534",
+    font_color="#1E40AF",
     margin=dict(t=10, b=10),
     showlegend=False,
 )
@@ -136,10 +136,10 @@ with col1:
     fig1 = px.histogram(
         daily, x="Date", y="Sales", nbins=30,
         labels={"Sales": "Sales ($)", "Date": "Date"},
-        color_discrete_sequence=["#16A34A"],
+        color_discrete_sequence=["#1D4ED8"],
     )
     fig1.update_layout(**LAYOUT)
-    fig1.update_traces(marker_line_color="#166534", marker_line_width=1)
+    fig1.update_traces(marker_line_color="#1E3A8A", marker_line_width=1)
     st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
@@ -151,12 +151,12 @@ with col2:
     )
     fig2 = px.bar(
         by_country, x="Country", y="Sales",
-        labels={"Sales": "Sales ($)"},
+        labels={"Sales": "Sales (RWF)"},
         color="Country",
-        color_discrete_sequence=GREEN,
+        color_discrete_sequence=BLUE_GREEN,
     )
     fig2.update_layout(**LAYOUT)
-    fig2.update_traces(marker_line_color="#166534", marker_line_width=1)
+    fig2.update_traces(marker_line_color="#1E3A8A", marker_line_width=1)
     st.plotly_chart(fig2, use_container_width=True)
 
 # ── Charts – row 2 ────────────────────────────────────────────────────────────
@@ -171,12 +171,12 @@ with col3:
     )
     fig3 = px.bar(
         by_product, x="Product", y="Sales",
-        labels={"Sales": "Sales ($)"},
+        labels={"Sales": "Sales (RWF)"},
         color="Product",
-        color_discrete_sequence=GREEN,
+        color_discrete_sequence=BLUE_GREEN,
     )
     fig3.update_layout(**LAYOUT)
-    fig3.update_traces(marker_line_color="#166534", marker_line_width=1)
+    fig3.update_traces(marker_line_color="#1E3A8A", marker_line_width=1)
     st.plotly_chart(fig3, use_container_width=True)
 
 with col4:
@@ -184,10 +184,10 @@ with col4:
     fig4 = px.histogram(
         filtered, x="Quantity", nbins=20,
         labels={"Quantity": "Quantity", "count": "Frequency"},
-        color_discrete_sequence=["#22C55E"],
+        color_discrete_sequence=["#16A34A"],
     )
     fig4.update_layout(**LAYOUT)
-    fig4.update_traces(marker_line_color="#166534", marker_line_width=1)
+    fig4.update_traces(marker_line_color="#1E3A8A", marker_line_width=1)
     st.plotly_chart(fig4, use_container_width=True)
 
 # ── Raw data table ────────────────────────────────────────────────────────────
